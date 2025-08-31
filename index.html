@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lifeline Wireless Vendor Tracker</title>
+    <title>FoxxWireless Vendor Locations</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -236,13 +236,50 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: none;
         }
+        
+        .days-checkbox-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .day-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            background: rgba(30, 64, 175, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .day-checkbox:hover {
+            background: rgba(30, 64, 175, 0.2);
+        }
+        
+        .day-checkbox input {
+            margin-right: 0.5rem;
+        }
+        
+        .day-checkbox.checked {
+            background: rgba(30, 64, 175, 0.3);
+            font-weight: 600;
+        }
+        
+        .edit-section {
+            background: rgba(30, 64, 175, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
     </style>
 </head>
 <body class="text-gray-800">
     <div class="container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-white mb-2">Lifeline Wireless Vendor Tracker</h1>
+            <h1 class="text-5xl font-bold text-white mb-2">FoxxWireless Vendor Locations</h1>
             <p class="text-blue-100">Track and manage potential vendor locations for Lifeline Wireless services</p>
         </div>
 
@@ -254,7 +291,7 @@
                     type="text"
                     id="searchInput"
                     placeholder="Search locations..."
-                    class="w-full pl-12 pr-4 py-3 form-input text-gray-800"
+                    class="w-full pl-14 pr-4 py-3 form-input text-gray-800"
                 >
             </div>
             <button
@@ -268,7 +305,7 @@
 
         <!-- Manual Input Section -->
         <div class="bg-white rounded-xl shadow-xl p-6 mb-8">
-            <div class="card-header mb-6 -mx-6 -mt-6">
+            <div class="card-header mb-4 -mx-6 -mt-6">
                 <h2 class="text-2xl font-bold">Manual Entry</h2>
                 <p class="text-blue-100">Enter location details manually using individual fields</p>
             </div>
@@ -338,44 +375,6 @@
                             placeholder="https://..."
                             class="w-full form-input"
                         >
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Days Available</label>
-                        <input
-                            type="text"
-                            id="manualDaysAvailable"
-                            placeholder="Mon-Fri, Sat only, etc."
-                            class="w-full form-input"
-                        >
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                    <textarea
-                        id="manualNotes"
-                        placeholder="Additional notes about this location..."
-                        class="w-full form-textarea"
-                    ></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Next Contact Date</label>
-                        <input
-                            type="date"
-                            id="manualNextContactDate"
-                            class="w-full form-input"
-                        >
-                    </div>
-                    <div class="flex items-center">
-                        <label class="toggle-container">
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="manualContacted">
-                                <span class="slider"></span>
-                            </div>
-                            <span class="text-sm font-medium text-gray-700">Contacted</span>
-                        </label>
                     </div>
                 </div>
 
@@ -515,43 +514,65 @@
                                 class="w-full form-input"
                             >
                         </div>
-                        <div>
+                    </div>
+
+                    <div class="edit-section">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Additional Details</h3>
+                        
+                        <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Days Available</label>
-                            <input
-                                type="text"
-                                id="daysAvailable"
-                                placeholder="Mon-Fri, Sat only, etc."
-                                class="w-full form-input"
-                            >
+                            <div class="days-checkbox-container" id="daysAvailableCheckboxes">
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Monday"> Mon
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Tuesday"> Tue
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Wednesday"> Wed
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Thursday"> Thu
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Friday"> Fri
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Saturday"> Sat
+                                </label>
+                                <label class="day-checkbox">
+                                    <input type="checkbox" value="Sunday"> Sun
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
-                        <textarea
-                            id="notes"
-                            placeholder="Additional notes about this location..."
-                            class="w-full form-textarea"
-                        ></textarea>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Next Contact Date</label>
-                            <input
-                                type="date"
-                                id="nextContactDate"
-                                class="w-full form-input"
-                            >
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                            <textarea
+                                id="notes"
+                                placeholder="Additional notes about this location..."
+                                class="w-full form-textarea"
+                            ></textarea>
                         </div>
-                        <div class="flex items-center">
-                            <label class="toggle-container">
-                                <div class="toggle-switch">
-                                    <input type="checkbox" id="contacted">
-                                    <span class="slider"></span>
-                                </div>
-                                <span class="text-sm font-medium text-gray-700">Contacted</span>
-                            </label>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Next Contact Date</label>
+                                <input
+                                    type="date"
+                                    id="nextContactDate"
+                                    class="w-full form-input"
+                                >
+                            </div>
+                            <div class="flex items-center">
+                                <label class="toggle-container">
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="contacted">
+                                        <span class="slider"></span>
+                                    </div>
+                                    <span class="text-sm font-medium text-gray-700">Contacted</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -603,7 +624,6 @@
             contactPerson: document.getElementById('contactPerson'),
             phoneNumber: document.getElementById('phoneNumber'),
             link: document.getElementById('link'),
-            daysAvailable: document.getElementById('daysAvailable'),
             notes: document.getElementById('notes'),
             nextContactDate: document.getElementById('nextContactDate'),
             contacted: document.getElementById('contacted')
@@ -617,11 +637,7 @@
             state: document.getElementById('manualState'),
             contactPerson: document.getElementById('manualContactPerson'),
             phoneNumber: document.getElementById('manualPhoneNumber'),
-            link: document.getElementById('manualLink'),
-            daysAvailable: document.getElementById('manualDaysAvailable'),
-            notes: document.getElementById('manualNotes'),
-            nextContactDate: document.getElementById('manualNextContactDate'),
-            contacted: document.getElementById('manualContacted')
+            link: document.getElementById('manualLink')
         };
 
         // Initialize
@@ -629,6 +645,22 @@
             loadFromLocalStorage();
             setupEventListeners();
             renderLocations();
+            setupDaysCheckboxes();
+        }
+
+        // Setup days checkboxes
+        function setupDaysCheckboxes() {
+            const checkboxes = document.querySelectorAll('#daysAvailableCheckboxes input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.parentElement;
+                    if (this.checked) {
+                        label.classList.add('checked');
+                    } else {
+                        label.classList.remove('checked');
+                    }
+                });
+            });
         }
 
         // Load data from localStorage
@@ -702,10 +734,26 @@
             formFields.contactPerson.value = location.contactPerson || '';
             formFields.phoneNumber.value = location.phoneNumber || '';
             formFields.link.value = location.link || '';
-            formFields.daysAvailable.value = location.daysAvailable || '';
             formFields.notes.value = location.notes || '';
             formFields.nextContactDate.value = location.nextContactDate || '';
             formFields.contacted.checked = location.contacted || false;
+            
+            // Reset and set days available checkboxes
+            const checkboxes = document.querySelectorAll('#daysAvailableCheckboxes input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.parentElement.classList.remove('checked');
+            });
+            
+            if (location.daysAvailable) {
+                const selectedDays = location.daysAvailable.split(',').map(day => day.trim());
+                checkboxes.forEach(checkbox => {
+                    if (selectedDays.includes(checkbox.value)) {
+                        checkbox.checked = true;
+                        checkbox.parentElement.classList.add('checked');
+                    }
+                });
+            }
             
             modal.style.display = 'flex';
         }
@@ -718,10 +766,22 @@
             locationForm.reset();
             formFields.editId.value = '';
             editingId = null;
+            
+            // Reset days checkboxes
+            const checkboxes = document.querySelectorAll('#daysAvailableCheckboxes input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.parentElement.classList.remove('checked');
+            });
         }
 
         function clearManualForm() {
             manualForm.reset();
+        }
+
+        function getSelectedDays() {
+            const checkboxes = document.querySelectorAll('#daysAvailableCheckboxes input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value).join(', ');
         }
 
         function saveLocation(e) {
@@ -736,7 +796,7 @@
                 contactPerson: formFields.contactPerson.value,
                 phoneNumber: formFields.phoneNumber.value,
                 link: formFields.link.value,
-                daysAvailable: formFields.daysAvailable.value,
+                daysAvailable: getSelectedDays(),
                 notes: formFields.notes.value,
                 nextContactDate: formFields.nextContactDate.value,
                 contacted: formFields.contacted.checked
@@ -773,10 +833,10 @@
                 contactPerson: manualFields.contactPerson.value,
                 phoneNumber: manualFields.phoneNumber.value,
                 link: manualFields.link.value,
-                daysAvailable: manualFields.daysAvailable.value,
-                notes: manualFields.notes.value,
-                nextContactDate: manualFields.nextContactDate.value,
-                contacted: manualFields.contacted.checked
+                daysAvailable: '',
+                notes: '',
+                nextContactDate: '',
+                contacted: false
             };
             
             // Add new location
@@ -816,7 +876,8 @@
                 (location.city && location.city.toLowerCase().includes(searchTerm)) ||
                 (location.state && location.state.toLowerCase().includes(searchTerm)) ||
                 (location.contactPerson && location.contactPerson.toLowerCase().includes(searchTerm)) ||
-                (location.notes && location.notes.toLowerCase().includes(searchTerm))
+                (location.notes && location.notes.toLowerCase().includes(searchTerm)) ||
+                (location.daysAvailable && location.daysAvailable.toLowerCase().includes(searchTerm))
             );
             
             if (filteredLocations.length === 0) {
@@ -829,20 +890,167 @@
             
             locationsContainer.innerHTML = filteredLocations.map(location => `
                 <div class="location-card ${location.contacted ? 'contacted-true' : 'contacted-false'}">
-                    
-${location.businessName || 'N/A'}</h3> <p class="text-gray-600">${location.contactPerson || 'N/A'}
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-1">${location.businessName || 'N/A'}</h3>
+                                <p class="text-gray-600">${location.contactPerson || 'N/A'}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="showEditForm(${JSON.stringify(location).replace(/"/g, '&quot;')})" class="text-blue-600 hover:text-blue-800 p-2 rounded-full hover:bg-blue-50">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteLocation(${location.id})" class="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-50">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
 
-<i class="fas fa-edit"></i> </button> <button onclick="deleteLocation(${location.id})" class="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-50">
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-map-marker-alt text-gray-400 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase tracking-wide">Address</p>
+                                    <p class="text-gray-800">${location.address || 'N/A'}</p>
+                                    <p class="text-gray-800">${location.city ? location.city + ', ' : ''}${location.state || ''}</p>
+                                </div>
+                            </div>
 
-Address
+                            ${location.phoneNumber ? `
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-phone text-gray-400"></i>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase tracking-wide">Phone</p>
+                                    <p class="text-gray-800">${location.phoneNumber}</p>
+                                </div>
+                            </div>
+                            ` : ''}
 
-${location.address || 'N/A'}</p> <p class="text-gray-800">${location.city ? location.city + ', ' : ''}${location.state || ''}</p> </div> </div> ${location.phoneNumber ? `
+                            ${location.link ? `
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-link text-gray-400"></i>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase tracking-wide">Link</p>
+                                    <a href="${location.link}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline break-all">
+                                        ${location.link}
+                                    </a>
+                                </div>
+                            </div>
+                            ` : ''}
 
-Phone
+                            ${location.daysAvailable ? `
+                            <div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wide">Days Available</p>
+                                <p class="text-gray-800">${location.daysAvailable}</p>
+                            </div>
+                            ` : ''}
 
-${location.phoneNumber}</p> </div> </div> ` : ''} %%%LATEX_BLOCK_5%%%{location.link}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline break-all"> %%%LATEX_BLOCK_6%%%{location.daysAvailable ? ` <div> <p class="text-xs text-gray-500 uppercase tracking-wide">Days Available</p> <p class="text-gray-800">${location.daysAvailable}
+                            ${location.notes ? `
+                            <div class="notes-section">
+                                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Notes</p>
+                                <p class="text-gray-700">${location.notes}</p>
+                            </div>
+                            ` : ''}
 
-` : ''} ${location.notes ? ` <div class="notes-section"> <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Notes</p> <p class="text-gray-700">%%%LATEX_BLOCK_8%%%{location.nextContactDate ? ` <div class="flex items-center gap-3"> <i class="fas fa-calendar text-gray-400"></i> <div> <p class="text-xs text-gray-500 uppercase tracking-wide">Next Contact</p> <p class="text-gray-800">${new Date(location.nextContactDate).toLocaleDateString()}
+                            ${location.nextContactDate ? `
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-calendar text-gray-400"></i>
+                                <div>
+                                    <p class="text-xs text-gray-500 uppercase tracking-wide">Next Contact</p>
+                                    <p class="text-gray-800">${new Date(location.nextContactDate).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
 
-` : ''}
-${location.contacted ? '<i class="fas fa-check-circle"></i> Contacted' : '<i class="far fa-circle"></i> Not Contacted' } </button> <span class="px-3 py-1 rounded-full text-xs font-medium ${ location.contacted ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800' }"> ${location.contacted ? 'Complete' : 'Pending'} </span> </div> </div> </div> `).join(''); } function exportToExcel() { if (locations.length === 0) { alert('No locations to export'); return; } // Prepare data for export const exportData = locations.map(location => ({ 'Business Name': location.businessName || '', 'Address': location.address || '', 'City': location.city || '', 'State': location.state || '', 'Contact Person': location.contactPerson || '', 'Phone Number': location.phoneNumber || '', 'Link': location.link || '', 'Days Available': location.daysAvailable || '', 'Notes': location.notes || '', 'Contacted': location.contacted ? 'Yes' : 'No', 'Next Contact Date': location.nextContactDate ? new Date(location.nextContactDate).toLocaleDateString() : '' })); // Create worksheet const ws = XLSX.utils.json_to_sheet(exportData); // Create workbook const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Lifeline Locations'); // Style the header row const range = XLSX.utils.decode_range(ws['!ref']); for (let C = range.s.c; C <= range.e.c; ++C) { const address = XLSX.utils.encode_cell({r: 0, c: C}); if (!ws[address]) continue; ws[address].s = { font: { bold: true, color: { rgb: "FFFFFF" } }, fill: { fgColor: { rgb: "1E40AF" } }, alignment: { horizontal: "center" } }; } // Auto-fit columns const colWidths = []; exportData.forEach(row => { Object.keys(row).forEach((key, index) => { const value = row[key] ? row[key].toString() : ''; if (!colWidths[index] || value.length > colWidths[index]) { colWidths[index] = Math.min(value.length + 2, 50); } }); }); ws['!cols'] = colWidths.map(width => ({wch: width})); // Export to file XLSX.writeFile(wb, 'Lifeline_Wireless_Vendor_Locations.xlsx'); } // Make functions available globally for inline event handlers window.showEditForm = showEditForm; window.deleteLocation = deleteLocation; window.toggleContacted = toggleContacted; // Initialize the application document.addEventListener('DOMContentLoaded', init); </script> </body> </html>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <button
+                                onclick="toggleContacted(${location.id})"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                                    location.contacted
+                                        ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                                        : 'bg-orange-100 text-orange-800 hover:bg-orange-200'
+                                }"
+                            >
+                                ${location.contacted ? 
+                                    '<i class="fas fa-check-circle"></i> Contacted' : 
+                                    '<i class="far fa-circle"></i> Not Contacted'
+                                }
+                            </button>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium ${
+                                location.contacted ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'
+                            }">
+                                ${location.contacted ? 'Complete' : 'Pending'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function exportToExcel() {
+            if (locations.length === 0) {
+                alert('No locations to export');
+                return;
+            }
+
+            // Prepare data for export
+            const exportData = locations.map(location => ({
+                'Business Name': location.businessName || '',
+                'Address': location.address || '',
+                'City': location.city || '',
+                'State': location.state || '',
+                'Contact Person': location.contactPerson || '',
+                'Phone Number': location.phoneNumber || '',
+                'Link': location.link || '',
+                'Days Available': location.daysAvailable || '',
+                'Notes': location.notes || '',
+                'Contacted': location.contacted ? 'Yes' : 'No',
+                'Next Contact Date': location.nextContactDate ? new Date(location.nextContactDate).toLocaleDateString() : ''
+            }));
+
+            // Create worksheet
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Lifeline Locations');
+            
+            // Style the header row
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                const address = XLSX.utils.encode_cell({r: 0, c: C});
+                if (!ws[address]) continue;
+                ws[address].s = {
+                    font: { bold: true, color: { rgb: "FFFFFF" } },
+                    fill: { fgColor: { rgb: "1E40AF" } },
+                    alignment: { horizontal: "center" }
+                };
+            }
+            
+            // Auto-fit columns
+            const colWidths = [];
+            exportData.forEach(row => {
+                Object.keys(row).forEach((key, index) => {
+                    const value = row[key] ? row[key].toString() : '';
+                    if (!colWidths[index] || value.length > colWidths[index]) {
+                        colWidths[index] = Math.min(value.length + 2, 50);
+                    }
+                });
+            });
+            ws['!cols'] = colWidths.map(width => ({wch: width}));
+            
+            // Export to file
+            XLSX.writeFile(wb, 'Lifeline_Wireless_Vendor_Locations.xlsx');
+        }
+
+        // Make functions available globally for inline event handlers
+        window.showEditForm = showEditForm;
+        window.deleteLocation = deleteLocation;
+        window.toggleContacted = toggleContacted;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
