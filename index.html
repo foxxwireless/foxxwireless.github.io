@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +15,7 @@
   </header>
 
   <main>
-    <div class="table-container">
+    <section class="table-container">
       <table id="location-table">
         <thead>
           <tr>
@@ -36,23 +35,25 @@
         </thead>
         <tbody></tbody>
       </table>
-    </div>
+    </section>
 
-    <form id="location-form">
-      <input type="text" id="name" placeholder="Name" required />
-      <input type="text" id="type" placeholder="Type" required />
-      <input type="text" id="address" placeholder="Address" required />
-      <input type="text" id="city" placeholder="City" required />
-      <input type="text" id="state" placeholder="State" required />
-      <input type="text" id="contact" placeholder="Contact" required />
-      <input type="text" id="phone_number" placeholder="Phone Number" />
-      <input type="email" id="email" placeholder="Email" />
-      <input type="text" id="permission" placeholder="Permission" required />
-      <input type="date" id="last_setup_data" placeholder="Last Setup Date" />
-      <input type="text" id="times" placeholder="Times" />
-      <input type="text" id="notes" placeholder="Notes" />
-      <button type="submit">Add Location</button>
-    </form>
+    <section class="form-container">
+      <form id="location-form">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="type" placeholder="Type" required />
+        <input type="text" id="address" placeholder="Address" required />
+        <input type="text" id="city" placeholder="City" required />
+        <input type="text" id="state" placeholder="State" required />
+        <input type="text" id="contact" placeholder="Contact" required />
+        <input type="text" id="phone_number" placeholder="Phone Number" />
+        <input type="email" id="email" placeholder="Email" />
+        <input type="text" id="permission" placeholder="Permission" required />
+        <input type="date" id="last_setup_data" placeholder="Last Setup Date" />
+        <input type="text" id="times" placeholder="Times" />
+        <input type="text" id="notes" placeholder="Notes" />
+        <button type="submit">Add Location</button>
+      </form>
+    </section>
   </main>
 
   <script src="app.js"></script>

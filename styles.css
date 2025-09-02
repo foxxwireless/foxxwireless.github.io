@@ -1,40 +1,53 @@
 body {
   margin: 0;
   font-family: 'Orbitron', sans-serif;
-  background: #0a1a2f url('assets/fox-icon.png') center center no-repeat;
-  background-size: 300px;
-  background-attachment: fixed;
+  background-color: #0a1a2f;
+  background-image: url('assets/fox-icon.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 250px;
   color: #00f0ff;
   padding: 20px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-top: 10px;
-  text-shadow: 0 0 10px #00f0ff;
+  text-shadow: 0 0 15px #00f0ff;
 }
 
 .fox-logo {
-  height: 60px;
-  vertical-align: middle;
-  filter: drop-shadow(0 0 5px #00f0ff);
+  height: 70px;
+  filter: drop-shadow(0 0 8px #00f0ff);
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: rgba(10, 26, 47, 0.85);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px #00f0ff;
 }
 
 .table-container {
   overflow-x: auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  border: 2px solid #00f0ff;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #1a2a3f;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #1a2a3f;
-  box-shadow: 0 0 10px #00f0ff;
+  color: #00f0ff;
 }
 
 th, td {
@@ -45,13 +58,19 @@ th, td {
 
 th {
   background-color: #0f2a4f;
-  color: #00f0ff;
+  text-shadow: 0 0 5px #00f0ff;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 form {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
 }
 
@@ -60,22 +79,22 @@ input {
   border: 1px solid #3a5f7d;
   background-color: #1a2a3f;
   color: #00f0ff;
-  border-radius: 4px;
-  width: 150px;
+  border-radius: 6px;
+  width: 160px;
 }
 
 button {
-  padding: 12px 20px;
+  padding: 12px 24px;
   background-color: #0f2a4f;
   color: #00f0ff;
-  border: 2px solid #3a5f7d;
-  border-radius: 6px;
+  border: 2px solid #00f0ff;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 button:hover {
-  box-shadow: 0 0 10px #00f0ff;
+  box-shadow: 0 0 12px #00f0ff;
   transform: scale(1.05);
 }
 
@@ -87,7 +106,7 @@ button:hover {
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   form {
