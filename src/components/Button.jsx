@@ -1,10 +1,14 @@
 import React from "react";
-import "../styles/Button.css";
 
-export default function Button({ text, onClick, type = "primary" }) {
+function Button({ text, type = "primary", onClick }) {
   return (
-    <button className={`btn ${type}`} onClick={onClick}>
+    <button
+      className={type === "primary" ? "primary" : "secondary"}
+      onClick={onClick}
+    >
       {text}
     </button>
   );
 }
+
+export default Button;

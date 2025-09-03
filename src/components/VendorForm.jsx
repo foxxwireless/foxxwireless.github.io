@@ -1,57 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import Button from "./Button";
-import "../styles/VendorForm.css";
 
-export default function VendorForm({ vendor, onClose, onSaved }) {
-  const [name, setName] = useState(vendor?.name || "");
-  const [contact, setContact] = useState(vendor?.contact || "");
-  const [phone, setPhone] = useState(vendor?.phone || "");
-  const [lastSetup, setLastSetup] = useState(vendor?.last_setup_date || "");
-  const [permission, setPermission] = useState(vendor?.permission || false);
-  const [notes, setNotes] = useState(vendor?.notes || "");
-  const [bestDays, setBestDays] = useState(vendor?.best_days || []);
-  const [bestTimes, setBestTimes] = useState(vendor?.best_times || []);
+function VendorForm({ vendor, onClose, onSaved }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    contact: "",
+    phone: "",
+    last_setup_date: "",
+    day: "",
+    time: "",
+    permission: "Yes",
+    notes: "",
+  });
 
-  const daysOptions = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const timesOptions = ["Morning-Noon", "Noon-Afternoon"];
+  useEffect(() => {
+    if (vendor) setFormData({ ...vendor });
+  }, [vendor]);
 
-  const handleDayChange = (day) => {
-    setBestDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
-    );
-  };
-
-  const handleTimeChange = (time) => {
-    setBestTimes((prev) =>
-      prev.includes(time) ? prev.filter((t) => t !== time) : [...prev, time]
-    );
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      name,
-      contact,
-      phone,
-      last_setup_date: lastSetup,
-      permission,
-      notes,
-      best_days: bestDays,
-      best_times: bestTimes,
-    };
-
-    let error;
     if (vendor) {
-      ({ error } = await supabase.from("vendors").update(payload).eq("id", vendor.id));
+      // Update
+      const { error } = await supabase
+        .from("vendors")
+        .update(formData)
+        .eq("id", vendor.id);
+      if (error) console.error(error);
     } else {
-      ({ error } = await supabase.from("vendors").insert([payload]));
+      // Insert
+      const { error } = await supabase.from("vendors").insert([formData]);
+      if (error) console.error(error);
     }
 
-    if (error) console.error(error);
-    else onSaved();
-
+    onSaved();
     onClose();
   };
 
@@ -59,51 +47,82 @@ export default function VendorForm({ vendor, onClose, onSaved }) {
     <div className="vendor-form-backdrop">
       <form className="vendor-form" onSubmit={handleSubmit}>
         <h2>{vendor ? "Edit Vendor" : "Add Vendor"}</h2>
-        <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-        <input placeholder="Contact" value={contact} onChange={(e) => setContact(e.target.value)} />
-        <input placeholder="Phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+
+        <input
+          type="text"
+          name="name"
+          placeholder="Vendor Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="contact"
+          placeholder="Contact Name"
+          value={formData.contact}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+
         <input
           type="date"
+          name="last_setup_date"
           placeholder="Last Setup Date"
-          value={lastSetup}
-          onChange={(e) => setLastSetup(e.target.value)}
+          value={formData.last_setup_date}
+          onChange={handleChange}
         />
-        <select value={permission} onChange={(e) => setPermission(e.target.value === "true")}>
-          <option value="true">Yes</option>
-          <option value="false">No</option>
-        </select>
-        <div>
-          <p>Best Days:</p>
-          {daysOptions.map((day) => (
-            <label key={day}>
-              <input
-                type="checkbox"
-                checked={bestDays.includes(day)}
-                onChange={() => handleDayChange(day)}
-              />
-              {day}
-            </label>
-          ))}
-        </div>
-        <div>
-          <p>Best Times:</p>
-          {timesOptions.map((time) => (
-            <label key={time}>
-              <input
-                type="checkbox"
-                checked={bestTimes.includes(time)}
-                onChange={() => handleTimeChange(time)}
-              />
-              {time}
-            </label>
-          ))}
-        </div>
-        <textarea placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
+
+        <input
+          type="text"
+          name="day"
+          placeholder="Day"
+          value={formData.day}
+          onChange={handleChange}
+        />
+
+        <input
+          type="text"
+          name="time"
+          placeholder="Time"
+          value={formData.time}
+          onChange={handleChange}
+        />
+
+        <label>
+          Permission:
+          <select
+            name="permission"
+            value={formData.permission}
+            onChange={handleChange}
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </label>
+
+        <textarea
+          name="notes"
+          placeholder="Notes"
+          value={formData.notes}
+          onChange={handleChange}
+        />
+
         <div className="vendor-form-buttons">
-          <Button text="Save" type="primary" />
           <Button text="Cancel" type="secondary" onClick={onClose} />
+          <Button text={vendor ? "Update" : "Add"} type="primary" />
         </div>
       </form>
     </div>
   );
 }
+
+export default VendorForm;
