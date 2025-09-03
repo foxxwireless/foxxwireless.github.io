@@ -1,0 +1,27 @@
+.drawer {
+  width: 220px;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  color: #00ffff;
+  font-family: 'Orbitron', sans-serif;
+  padding: 2rem 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.drawer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.drawer li {
+  padding: 1rem 0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.drawer li:hover {
+  color: #ff00ff;
+}

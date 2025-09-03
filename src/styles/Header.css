@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  color: #00ffff;
+  font-family: 'Orbitron', sans-serif;
+  background-color: rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 2;
+}
+
+.fox-icon {
+  width: 40px;
+  height: 40px;
+}

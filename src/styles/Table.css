@@ -1,0 +1,27 @@
+.table-container {
+  margin-left: 240px; /* leave space for drawer */
+  padding: 2rem;
+  color: #00ffff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.vendor-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.vendor-table th,
+.vendor-table td {
+  border: 1px solid #00ffff;
+  padding: 0.8rem;
+  text-align: left;
+}
+
+.vendor-table th {
+  background-color: rgba(255,0,255,0.2);
+}
+
+.vendor-table tr:hover {
+  background-color: rgba(255,0,255,0.1);
+}
