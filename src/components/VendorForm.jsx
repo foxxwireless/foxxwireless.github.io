@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
 import Button from "./Button";
 import "../styles/VendorForm.css";
@@ -10,26 +10,48 @@ export default function VendorForm({ vendor, onClose, onSaved }) {
   const [lastSetup, setLastSetup] = useState(vendor?.last_setup_date || "");
   const [permission, setPermission] = useState(vendor?.permission || false);
   const [notes, setNotes] = useState(vendor?.notes || "");
+  const [bestDays, setBestDays] = useState(vendor?.best_days || []);
+  const [bestTimes, setBestTimes] = useState(vendor?.best_times || []);
+
+  const daysOptions = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const timesOptions = ["Morning-Noon", "Noon-Afternoon"];
+
+  const handleDayChange = (day) => {
+    setBestDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+    );
+  };
+
+  const handleTimeChange = (time) => {
+    setBestTimes((prev) =>
+      prev.includes(time) ? prev.filter((t) => t !== time) : [...prev, time]
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const payload = {
+      name,
+      contact,
+      phone,
+      last_setup_date: lastSetup,
+      permission,
+      notes,
+      best_days: bestDays,
+      best_times: bestTimes,
+    };
+
+    let error;
     if (vendor) {
-      // Update
-      const { error } = await supabase
-        .from("vendors")
-        .update({ name, contact, phone, last_setup_date: lastSetup, permission, notes })
-        .eq("id", vendor.id);
-      if (error) console.error(error);
+      ({ error } = await supabase.from("vendors").update(payload).eq("id", vendor.id));
     } else {
-      // Add
-      const { error } = await supabase
-        .from("vendors")
-        .insert([{ name, contact, phone, last_setup_date: lastSetup, permission, notes }]);
-      if (error) console.error(error);
+      ({ error } = await supabase.from("vendors").insert([payload]));
     }
 
-    onSaved();
+    if (error) console.error(error);
+    else onSaved();
+
     onClose();
   };
 
@@ -50,6 +72,32 @@ export default function VendorForm({ vendor, onClose, onSaved }) {
           <option value="true">Yes</option>
           <option value="false">No</option>
         </select>
+        <div>
+          <p>Best Days:</p>
+          {daysOptions.map((day) => (
+            <label key={day}>
+              <input
+                type="checkbox"
+                checked={bestDays.includes(day)}
+                onChange={() => handleDayChange(day)}
+              />
+              {day}
+            </label>
+          ))}
+        </div>
+        <div>
+          <p>Best Times:</p>
+          {timesOptions.map((time) => (
+            <label key={time}>
+              <input
+                type="checkbox"
+                checked={bestTimes.includes(time)}
+                onChange={() => handleTimeChange(time)}
+              />
+              {time}
+            </label>
+          ))}
+        </div>
         <textarea placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
         <div className="vendor-form-buttons">
           <Button text="Save" type="primary" />
