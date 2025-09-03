@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foxx Wireless Locations</title>
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foxx Wireless Locations</title>
+  
+  <!-- Optional: Redirect automatically to /build folder (or root if you deploy build directly) -->
+  <meta http-equiv="refresh" content="0; url=./build/index.html" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('./src/assets/fox-bg.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Redirecting to the Foxx Wireless App…</h1>
+    <p>If you are not redirected, <a href="./build/index.html" style="color: #fff;">click here</a>.</p>
+  </div>
+</body>
 </html>
