@@ -2,7 +2,7 @@
   "name": "foxxwireless",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://foxxwireless.github.io",
+  "homepage": "https://foxxwireless.github.io/foxxwireless.github.io",
   "dependencies": {
     "@supabase/supabase-js": "^2.57.0",
     "gh-pages": "^6.3.0",

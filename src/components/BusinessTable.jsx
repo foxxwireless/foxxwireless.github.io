@@ -1,5 +1,5 @@
 import React from "react";
-import "./BusinessTable.css";
+import "../styles/BusinessTable.css";
 
 export default function BusinessTable({ businesses, editBusiness, deleteBusiness }) {
   const dayOptions = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { supabase } from "./supabaseClient";
-import "./BusinessForm.css";
+import { supabase } from "../supabaseClient";
+import "../styles/BusinessForm.css";
 
 const dayOptions = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const timeOptions = ["Morning", "Afternoon", "All Day"];
