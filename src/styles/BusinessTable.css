@@ -1,0 +1,35 @@
+.business-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.business-table th,
+.business-table td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.business-table th {
+  background-color: #007bff;
+  color: white;
+}
+
+.business-table button {
+  margin: 0 2px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.business-table button:first-child {
+  background-color: #28a745;
+  color: white;
+}
+
+.business-table button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
