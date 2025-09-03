@@ -1,61 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foxx Wireless Locations</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foxx Wireless — Vendor Locations</title>
+  <meta name="description" content="Manage, search, and track Foxx Wireless vending locations." />
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
 </head>
 <body>
-  <header>
-    <img src="assets/fox-icon.png" alt="Foxx Logo" class="fox-logo" />
-    <h1>Foxx Wireless Locations</h1>
+  <header class="app-header">
+    <div class="brand">
+      <img src="assets/favicon.ico" alt="Foxx logo" class="logo" />
+      <div class="titles">
+        <h1>Foxx Wireless</h1>
+        <p class="subtitle">Vendor Locations Manager</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <input id="search" class="input" placeholder="Search name, city, notes…" aria-label="Search" />
+      <button id="addRowBtn" class="btn">+ New</button>
+    </div>
   </header>
 
   <main>
-    <section class="table-container">
-      <table id="location-table">
+    <section class="table-wrap">
+      <table id="locationTable">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Contact</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Permission</th>
-            <th>Last Setup</th>
-            <th>Times</th>
-            <th>Notes</th>
+            <th data-key="name">Name</th>
+            <th data-key="type">Type</th>
+            <th data-key="address">Address</th>
+            <th data-key="city">City</th>
+            <th data-key="state">State</th>
+            <th data-key="contact">Contact</th>
+            <th data-key="phone_number">Phone</th>
+            <th data-key="email">Email</th>
+            <th data-key="permission">Permission</th>
+            <th data-key="last_setup_date">Last Setup</th>
+            <th data-key="times">Times</th>
+            <th data-key="notes">Notes</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="tbody"></tbody>
       </table>
-    </section>
-
-    <section class="form-container">
-      <form id="location-form">
-        <input type="text" id="name" placeholder="Name" required />
-        <input type="text" id="type" placeholder="Type" required />
-        <input type="text" id="address" placeholder="Address" required />
-        <input type="text" id="city" placeholder="City" required />
-        <input type="text" id="state" placeholder="State" required />
-        <input type="text" id="contact" placeholder="Contact" required />
-        <input type="text" id="phone_number" placeholder="Phone Number" />
-        <input type="email" id="email" placeholder="Email" />
-        <input type="text" id="permission" placeholder="Permission" required />
-        <input type="date" id="last_setup_data" placeholder="Last Setup Date" />
-        <input type="text" id="times" placeholder="Times" />
-        <input type="text" id="notes" placeholder="Notes" />
-        <button type="submit">Add Location</button>
-      </form>
+      <div id="emptyState" class="empty hidden">No locations yet. Click <b>+ New</b> to add your first spot.</div>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <!-- Drawer Form -->
+  <aside id="drawer" class="drawer hidden" aria-hidden="true">
+    <form id="locationForm" class="form">
+      <h2 id="formTitle">Add Location</h2>
+      <div class="grid">
+        <label>Name<input name="name" required /></label>
+        <label>Type<select name="type">
+          <option>Grocery</option><option>Dollar Store</option><option>Gas Station</option><option>Laundromat</option><option>Pharmacy</option><option>Other</option>
+        </select></label>
+        <label>Address<input name="address" required /></label>
+        <label>City<input name="city" required /></label>
+        <label>State<input name="state" maxlength="2" placeholder="LA" required /></label>
+        <label>Contact<input name="contact" /></label>
+        <label>Phone<input name="phone_number" placeholder="(###) ###-####" /></label>
+        <label>Email<input name="email" type="email" /></label>
+        <label>Permission<select name="permission">
+          <option value="Unknown">Unknown</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select></label>
+        <label>Last Setup<input name="last_setup_date" type="date" /></label>
+        <label>Times<select name="times">
+          <option>Morning–Noon</option><option>Noon–Afternoon</option><option>All Day</option><option>Evening</option>
+        </select></label>
+        <label class="full">Notes<textarea name="notes" rows="3"></textarea></label>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn">Save</button>
+        <button type="button" id="cancelBtn" class="btn secondary">Cancel</button>
+      </div>
+      <input type="hidden" name="id" />
+    </form>
+  </aside>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
